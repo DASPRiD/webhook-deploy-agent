@@ -13,12 +13,11 @@ module.exports = {
         instance_var: 'INSTANCE_ID',
         time: true,
         env: {
-            NODE_ENV: 'development',
-        },
-        env_production: {
             NODE_ENV: 'production',
             APP_ROOT_PATH: `${process.env.PWD}/current/`,
             NODE_CONFIG_DIR: `${process.env.PWD}/current/config/`,
+            PORT: process.env.PORT,
+            HOST: process.env.HOST,
         },
     }],
 };
