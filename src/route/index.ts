@@ -166,7 +166,7 @@ const handleDeploy = async (context : RouterContext) => {
 
     if (!target) {
         context.status = 400;
-        context.body = {message: 'Unknown repository'};
+        context.body = {message: `Unknown repository: ${repository}`};
         return;
     }
 
