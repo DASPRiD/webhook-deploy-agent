@@ -1,0 +1,9 @@
+{
+    targets: [
+        {
+            repository: 'test/test',
+            secret: 'abcdef',
+            baseDir: '/tmp/deploy-test',
+        },
+    ],
+}

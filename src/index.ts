@@ -73,3 +73,7 @@ const server = app.listen(port, process.env.HOST);
 
 gracefulShutdown(server);
 logger.info(`Server started on port ${port}`);
+
+if (process.send) {
+    process.send('ready');
+}
