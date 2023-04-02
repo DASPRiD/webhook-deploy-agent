@@ -1,10 +1,11 @@
 import {exec} from 'child_process';
 import {createHash, createHmac} from 'crypto';
 import {createWriteStream} from 'fs';
-import {mkdir, readlink, rm, symlink, unlink, readFile} from 'fs/promises';
+import {mkdir, rm, symlink, unlink, readFile} from 'fs/promises';
 import {join} from 'path';
 import {pipeline} from 'stream/promises';
 import config from 'config';
+import {glob} from 'glob';
 import type Router from 'koa-tree-router';
 import type {RouterContext} from 'koa-tree-router';
 import getRawBody from 'raw-body';
@@ -257,10 +258,7 @@ const handleDeploy = async (context : RouterContext) => {
         }
     }
 
-    let previousDir = null;
-
     try {
-        previousDir = await readlink(currentDir);
         await unlink(currentDir);
     } catch {
         // Noop
@@ -287,8 +285,12 @@ const handleDeploy = async (context : RouterContext) => {
         }
     }
 
-    if (previousDir && previousDir !== deployDir) {
-        await rm(previousDir, {recursive: true, force: true});
+    const buildDirs = await glob(join(baseDir, 'build-*'));
+
+    for (const buildDir of buildDirs) {
+        if (buildDir !== deployDir) {
+            await rm(buildDir, {recursive: true, force: true});
+        }
     }
 
     context.status = 200;
