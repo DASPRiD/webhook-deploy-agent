@@ -67,7 +67,7 @@ const deploySchema = z.object({
 type DeployConfig = z.infer<typeof deploySchema>;
 
 const getDeployConfig = async (deployDir : string) : Promise<DeployConfig | null> => {
-    const configPath = join(deployDir, 'deploy.yaml');
+    const configPath = join(deployDir, 'deploy.yml');
     let rawConfig = null;
 
     try {
